@@ -1,0 +1,218 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Nunito:wght@400;600;700;800&display=swap');
+@import 'variables.css';
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--white);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+/* ── Typography ── */
+.display {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(2rem, 7vw, 3rem);
+  color: var(--pink-deep);
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  text-align: center;
+  color: var(--purple);
+  font-size: .98rem;
+  margin-bottom: 36px;
+  font-weight: 600;
+}
+
+/* ── Buttons ── */
+.btn-primary {
+  background: linear-gradient(135deg, var(--pink-deep), var(--purple));
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: 12px 32px;
+  font-size: 1rem;
+  font-weight: 800;
+  font-family: 'Nunito', sans-serif;
+  cursor: pointer;
+  transition: opacity .2s, transform .15s;
+  display: inline-block;
+}
+.btn-primary:hover { opacity: .88; transform: translateY(-2px); }
+
+.btn-secondary {
+  background: var(--white);
+  color: var(--pink-deep);
+  border: 2px solid var(--pink);
+  border-radius: var(--radius-pill);
+  padding: 10px 24px;
+  font-size: .95rem;
+  font-weight: 800;
+  font-family: 'Nunito', sans-serif;
+  cursor: pointer;
+  transition: background .2s, color .2s;
+  text-decoration: none;
+  display: inline-block;
+}
+.btn-secondary:hover { background: var(--pink); color: #fff; }
+
+.btn-purple {
+  background: linear-gradient(135deg, var(--purple), var(--purple-deep));
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: 12px 32px;
+  font-size: 1rem;
+  font-weight: 800;
+  font-family: 'Nunito', sans-serif;
+  cursor: pointer;
+  transition: opacity .2s;
+  width: 100%;
+}
+.btn-purple:hover { opacity: .88; }
+
+/* ── Form inputs ── */
+.field {
+  width: 100%;
+  border: 2px solid #e0cce8;
+  border-radius: 12px;
+  padding: 11px 16px;
+  font-size: .97rem;
+  font-family: 'Nunito', sans-serif;
+  color: var(--text);
+  outline: none;
+  transition: border-color .2s;
+  background: #fafafa;
+}
+.field:focus { border-color: var(--purple); background: #fff; }
+
+label.field-label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 5px;
+  font-size: .88rem;
+  color: var(--text);
+}
+
+.form-group { margin-bottom: 16px; }
+
+/* ── Card ── */
+.card {
+  background: var(--white);
+  border: 2px solid #f8bbd0;
+  border-radius: var(--radius);
+  padding: 24px 20px;
+  box-shadow: var(--shadow);
+}
+
+/* ── Toast ── */
+#toast {
+  position: fixed;
+  bottom: 24px; left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--text);
+  color: #fff;
+  padding: 12px 28px;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+  font-size: .95rem;
+  z-index: 9999;
+  transition: transform .35s ease;
+  pointer-events: none;
+}
+#toast.show { transform: translateX(-50%) translateY(0); }
+
+/* ── Nav bar ── */
+.nav-pills {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 28px 20px 0;
+}
+.pill {
+  background: var(--white);
+  border: 2px solid var(--pink);
+  color: var(--pink-deep);
+  border-radius: var(--radius-pill);
+  padding: 10px 24px;
+  font-weight: 800;
+  font-size: .95rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background .2s, color .2s, transform .15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.pill:hover { background: var(--pink); color: #fff; transform: translateY(-2px); }
+
+/* ── Section ── */
+.section { padding: 52px 20px; }
+.section--purple { background: linear-gradient(180deg, var(--purple-light) 0%, var(--pink-light) 100%); }
+
+/* ── Modal ── */
+.modal-bg {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(80,30,90,.45);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.modal-bg.open { display: flex; }
+.modal {
+  background: #fff;
+  border-radius: 24px;
+  padding: 36px 32px;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,.25);
+  position: relative;
+  animation: popIn .3s ease;
+}
+@keyframes popIn {
+  from { transform: scale(.85); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+.modal-close {
+  position: absolute; top: 14px; right: 18px;
+  font-size: 1.4rem; cursor: pointer; color: #bbb;
+  background: none; border: none; line-height: 1;
+}
+
+/* ── Divider ── */
+.divider {
+  text-align: center;
+  font-size: 1.4rem;
+  padding: 8px 0;
+  letter-spacing: 6px;
+}
+
+/* ── Footer ── */
+footer {
+  background: linear-gradient(135deg, var(--pink-deep), var(--purple-deep));
+  color: rgba(255,255,255,.85);
+  text-align: center;
+  padding: 32px 20px;
+  font-size: .9rem;
+}
+footer .footer-name {
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.8rem;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .modal { padding: 28px 18px; }
+}

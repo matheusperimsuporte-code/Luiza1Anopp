@@ -1,0 +1,16 @@
+/* ── Design Tokens ── */
+:root {
+  --pink:        #f06292;
+  --pink-light:  #fce4ec;
+  --pink-deep:   #e91e8c;
+  --purple:      #9c6bb5;
+  --purple-light:#ede7f6;
+  --purple-deep: #7b1fa2;
+  --green:       #66bb6a;
+  --white:       #ffffff;
+  --text:        #5a3060;
+  --gray:        #888888;
+  --shadow:      0 4px 18px rgba(240,98,146,.12);
+  --radius:      20px;
+  --radius-pill: 999px;
+}

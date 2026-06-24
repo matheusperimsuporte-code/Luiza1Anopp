@@ -1,0 +1,515 @@
+
+<a href="admin/index.html" style="position:fixed;top:15px;right:15px;z-index:9999;
+text-decoration:none;font-size:28px;background:rgba(255,255,255,.9);
+padding:10px 14px;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,.2);"
+title="Painel Administrativo">⚙️</a>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎀 1 Aninho da Luísa 🎀</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* ── Hero ── */
+    .hero {
+      background: linear-gradient(160deg, #fce4ec 0%, #ede7f6 60%, #fce4ec 100%);
+      text-align: center;
+      padding: 48px 20px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before, .hero::after {
+      content: '';
+      position: absolute;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      opacity: .15;
+      pointer-events: none;
+    }
+    .hero::before { background: var(--pink); top: -80px; left: -80px; }
+    .hero::after  { background: var(--purple); bottom: -80px; right: -80px; }
+
+    .butterflies {
+      font-size: 2rem; letter-spacing: 8px; margin-bottom: 8px;
+      animation: flutter 3s ease-in-out infinite alternate;
+    }
+    @keyframes flutter {
+      from { transform: translateY(0); }
+      to   { transform: translateY(-8px); }
+    }
+    .badge {
+      display: inline-block;
+      border: 2.5px dashed var(--pink);
+      border-radius: 40% 60% 50% 50% / 40% 40% 60% 60%;
+      padding: 28px 40px 20px;
+      background: rgba(255,255,255,.75);
+      backdrop-filter: blur(4px);
+      position: relative;
+      margin-bottom: 16px;
+    }
+    .badge::before {
+      content: '🎀';
+      font-size: 2.4rem;
+      position: absolute;
+      top: -24px; left: 50%;
+      transform: translateX(-50%);
+    }
+    .name-display {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(3rem, 12vw, 5.5rem);
+      background: linear-gradient(135deg, var(--pink-deep), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.1;
+    }
+    .age-line {
+      font-size: clamp(1.4rem, 5vw, 2.2rem);
+      font-weight: 800;
+      color: var(--purple-deep);
+      margin-top: 4px;
+    }
+    .age-line em { color: var(--pink-deep); font-style: normal; }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: var(--purple);
+      max-width: 480px;
+      margin: 0 auto 28px;
+      line-height: 1.6;
+    }
+    .party-chips {
+      display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+    }
+    .chip {
+      background: #fff;
+      border: 2px solid var(--pink-light);
+      border-radius: 999px;
+      padding: 8px 20px;
+      font-weight: 700;
+      font-size: .92rem;
+      color: var(--text);
+      box-shadow: 0 2px 8px rgba(240,98,146,.1);
+    }
+
+    /* ── Hero banner image ── */
+    .hero-img {
+      max-width: 260px;
+      width: 70vw;
+      border-radius: 50%;
+      margin: 20px auto 0;
+      display: block;
+      box-shadow: 0 8px 32px rgba(156,107,181,.2);
+      border: 4px solid #fff;
+    }
+
+    /* ── Gift section ── */
+    #presentes { background: linear-gradient(180deg, #fff 0%, #fce4ec22 100%); }
+    .gift-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .gift-card {
+      background: var(--white);
+      border: 2px solid #f8bbd0;
+      border-radius: 20px;
+      padding: 24px 20px 20px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      transition: transform .2s, box-shadow .2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .gift-card:hover:not(.chosen) { transform: translateY(-4px); box-shadow: 0 10px 32px rgba(240,98,146,.2); }
+    .gift-card.chosen {
+      border-color: var(--green);
+      background: #f1f8e9;
+      pointer-events: none;
+    }
+    .gift-card.chosen::after {
+      content: '✓ Escolhido!';
+      position: absolute; top: 12px; right: 12px;
+      background: var(--green);
+      color: #fff;
+      font-size: .75rem; font-weight: 800;
+      border-radius: 999px; padding: 3px 10px;
+    }
+    .gift-img {
+      width: 100%; height: 140px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      display: block;
+    }
+    .gift-icon  { font-size: 3rem; margin-bottom: 10px; }
+    .gift-name  { font-weight: 800; font-size: 1.05rem; color: var(--text); margin-bottom: 4px; }
+    .gift-desc  { font-size: .88rem; color: var(--gray); margin-bottom: 12px; line-height: 1.5; }
+    .gift-price { font-size: 1.4rem; font-weight: 800; color: var(--pink-deep); margin-bottom: 14px; }
+    .chosen-by  { font-size: .85rem; color: var(--green); font-weight: 700; }
+
+    /* ── PIX Modal ── */
+    .modal h2 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2rem;
+      color: var(--pink-deep);
+      margin-bottom: 4px;
+    }
+    .modal-gift-name { font-weight: 800; color: var(--text); margin-bottom: 4px; }
+    .modal-price { font-size: 2rem; font-weight: 800; color: var(--purple-deep); margin-bottom: 20px; }
+    .pix-box {
+      background: var(--purple-light);
+      border: 2px dashed var(--purple);
+      border-radius: 16px;
+      padding: 18px 16px;
+      margin-bottom: 18px;
+    }
+    .pix-label { font-size: .8rem; color: var(--purple); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+    .pix-key   { font-size: 1.05rem; font-weight: 800; color: var(--text); word-break: break-all; margin-bottom: 10px; }
+    .pix-owner { font-size: .88rem; color: var(--purple); font-weight: 700; margin-top: 6px; }
+    .btn-copy {
+      background: var(--purple);
+      color: #fff; border: none; border-radius: 999px;
+      padding: 8px 22px; font-size: .88rem; font-weight: 800;
+      font-family: 'Nunito', sans-serif; cursor: pointer;
+    }
+    .btn-copy:hover { opacity: .85; }
+    .modal-note { font-size: .85rem; color: #aaa; margin-bottom: 20px; line-height: 1.5; }
+
+    /* ── RSVP ── */
+    .rsvp-wrap {
+      max-width: 520px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 24px;
+      padding: 36px 32px;
+      box-shadow: 0 6px 28px rgba(156,107,181,.15);
+    }
+    #rsvpSuccess { display: none; text-align: center; padding: 20px 0; }
+    #rsvpSuccess .big-icon  { font-size: 4rem; margin-bottom: 10px; }
+    #rsvpSuccess h3 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.8rem; color: var(--purple-deep); margin-bottom: 8px;
+    }
+
+    /* ── Confirmed list ── */
+    .confirmed-grid {
+      max-width: 700px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+    .confirmed-chip {
+      background: var(--purple-light);
+      border: 1.5px solid var(--purple);
+      border-radius: 999px;
+      padding: 8px 18px;
+      font-size: .9rem; font-weight: 700;
+      color: var(--purple-deep);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .confirmed-count { font-size: .8rem; color: #aaa; }
+
+    @media (max-width: 480px) { .rsvp-wrap { padding: 24px 16px; } }
+  
+.admin-btn{
+display:inline-block;margin-top:20px;padding:12px 24px;background:#9c6bb5;color:#fff;text-decoration:none;border-radius:12px;font-weight:700}
+.admin-btn:hover{opacity:.9}
+
+</style>
+</head>
+<body>
+
+<!-- ── HERO ── -->
+<header class="hero">
+  <div class="butterflies">🦋 🌸 🦋</div>
+  <div class="badge">
+    <div class="name-display" id="heroTitle">Luísa</div>
+    <div class="age-line"><em>1</em> aninho! 🎂</div>
+  </div>
+  <!-- Banner image: coloque sua imagem em images/banner/hero.png -->
+  <img src="images/banner/hero.png" alt="Luísa" class="hero-img"
+       onerror="this.style.display='none'">
+  <p class="hero-sub" id="heroSub">Venha celebrar com a gente o primeiro ano de vida da nossa pequena princesa! 🌸</p>
+  <div class="party-chips">
+    <div class="chip">📅 <span id="chipDate">—</span></div>
+    <div class="chip">🕑 <span id="chipTime">—</span></div>
+    <div class="chip">📍 <span id="chipPlace">—</span></div>
+  </div>
+</header>
+
+<nav class="nav-pills">
+  <a class="pill" href="#presentes">🎁 Lista de Presentes</a>
+  <a class="pill" href="#confirmacao">✅ Confirmar Presença</a>
+  <a class="pill" href="#confirmados">💜 Quem vem?</a>
+</nav>
+
+<!-- ── GIFTS ── -->
+<section class="section" id="presentes">
+  <h2 class="display">Lista de Presentes</h2>
+  <p class="subtitle">Escolha um presente e envie o valor via Pix para a mamãe. Simples assim! 💝</p>
+  <div class="gift-grid" id="giftGrid"></div>
+</section>
+
+<!-- ── RSVP ── -->
+<section class="section section--purple" id="confirmacao">
+  <h2 class="display">Confirmar Presença</h2>
+  <p class="subtitle">Confirme sua presença para que possamos preparar tudo com carinho! 🎀</p>
+  <div class="rsvp-wrap">
+    <div id="rsvpForm">
+      <div class="form-group">
+        <label class="field-label">Seu nome completo 👤</label>
+        <input class="field" type="text" id="guestName" placeholder="Ex: Ana Silva">
+      </div>
+      <div class="form-group">
+        <label class="field-label">Telefone / WhatsApp 📱</label>
+        <input class="field" type="tel" id="guestPhone" placeholder="(11) 99999-9999">
+      </div>
+      <div class="form-group">
+        <label class="field-label">Quantas pessoas virão? 🎈</label>
+        <input class="field" type="number" id="guestCount" min="1" max="20" value="1">
+      </div>
+      <div class="form-group">
+        <label class="field-label">Restrição alimentar? 🍽️ <span style="color:#aaa;font-weight:400;">(opcional)</span></label>
+        <input class="field" type="text" id="guestRestriction" placeholder="Ex: sem glúten, vegetariano...">
+      </div>
+      <button class="btn-primary" style="width:100%;padding:13px;" onclick="submitRSVP()">
+        💜 Confirmar minha presença!
+      </button>
+    </div>
+    <div id="rsvpSuccess">
+      <div class="big-icon">🎉</div>
+      <h3>Presença confirmada!</h3>
+      <p>Que alegria! A Luísa vai ficar feliz em te ver.<br>Até a festa! 🎂🦋</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── WHO'S COMING ── -->
+<section class="section" id="confirmados">
+  <h2 class="display">Quem já confirmou? 💜</h2>
+  <p class="subtitle">Veja quem já garantiu seu lugar na festa!</p>
+  <div class="confirmed-grid" id="confirmedGrid"></div>
+</section>
+
+<div class="divider">🌸 💜 🌸 💜 🌸</div>
+
+<footer>
+  <div class="footer-name">Luísa 🎀</div>
+  <p>Com amor, família &nbsp;·&nbsp; <span id="footerYear"></span></p>
+</footer>
+
+<!-- ── PIX MODAL ── -->
+<div class="modal-bg" id="pixModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+
+    <!-- Step 1: name -->
+    <div id="step1">
+      <div style="font-size:2.5rem;margin-bottom:8px;">🎁</div>
+      <h2>Escolhendo presente</h2>
+      <p class="modal-gift-name" id="s1Name"></p>
+      <div class="modal-price" id="s1Price"></div>
+      <div class="form-group" style="text-align:left">
+        <label class="field-label">Seu nome (para identificar no PIX) 💜</label>
+        <input class="field" type="text" id="senderName" placeholder="Ex: Vovó Maria">
+      </div>
+      <p class="modal-note">Seu nome aparecerá em quem escolheu esse presente!</p>
+      <button class="btn-primary" style="width:100%;" onclick="goToStep2()">Ver dados do PIX →</button>
+    </div>
+    <div><a href="admin/index.html" class="admin-btn">⚙️ Painel Administrativo</a></div>
+
+    <!-- Step 2: PIX -->
+    <div id="step2" style="display:none">
+      <div style="font-size:2.5rem;margin-bottom:8px;">💸</div>
+      <h2>Enviar via PIX</h2>
+      <p class="modal-gift-name" id="s2Name"></p>
+      <div class="modal-price" id="s2Price"></div>
+      <div class="pix-box">
+        <div class="pix-label" id="s2KeyType">Chave PIX</div>
+        <div class="pix-key"   id="s2Key">—</div>
+        <button class="btn-copy" onclick="copyPix()">📋 Copiar chave</button>
+        <div class="pix-owner" id="s2Owner"></div>
+      </div>
+      <p class="modal-note">Após enviar o PIX, clique em confirmar abaixo. O presente ficará marcado como escolhido! 🎀</p>
+      <button class="btn-primary" style="width:100%;" onclick="confirmGift()">✅ Confirmar que enviei o PIX</button>
+    </div>
+
+    <!-- Step 3: success -->
+    <div id="step3" style="display:none">
+      <div style="font-size:3.5rem;margin-bottom:8px;">🎉</div>
+      <h2 style="color:var(--green)">Obrigada!</h2>
+      <p style="color:var(--text);line-height:1.7;">
+        <strong id="s3Sender"></strong> escolheu<br>
+        <strong id="s3Gift"></strong>!<br><br>
+        A Luísa vai adorar! 🦋💜
+      </p>
+      <br>
+      <button class="btn-primary" style="width:100%;" onclick="closeModal()">Fechar 🌸</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script type="module" src="js/data.js"></script>
+<script>
+  let currentGift = null;
+
+  // ── Boot: aguarda Firebase carregar antes de renderizar ──────────
+  async function init() {
+    await window.dbReady;
+
+    const cfg = getConfig();
+    document.getElementById('heroTitle').textContent  = cfg.heroTitle    || 'Luísa';
+    document.getElementById('heroSub').textContent    = cfg.heroSubtitle || '';
+    document.getElementById('chipDate').textContent   = cfg.partyDate    || '—';
+    document.getElementById('chipTime').textContent   = cfg.partyTime    || '—';
+    document.getElementById('chipPlace').textContent  = cfg.partyPlace   || '—';
+    document.getElementById('footerYear').textContent = new Date().getFullYear();
+    renderGifts();
+    renderGuests();
+
+    // Escuta em tempo real: atualiza presentes e convidados automaticamente
+    window.dbListenRealtime(
+      () => renderGifts(),
+      () => renderGuests(),
+      (cfg) => {
+        document.getElementById('heroTitle').textContent  = cfg.heroTitle    || 'Luísa';
+        document.getElementById('heroSub').textContent    = cfg.heroSubtitle || '';
+        document.getElementById('chipDate').textContent   = cfg.partyDate    || '—';
+        document.getElementById('chipTime').textContent   = cfg.partyTime    || '—';
+        document.getElementById('chipPlace').textContent  = cfg.partyPlace   || '—';
+      }
+    );
+  }
+
+  // Aguarda o módulo data.js ser carregado antes de chamar init()
+  window.addEventListener('load', () => {
+    // pequeno delay para garantir que o módulo ESM já exportou para window
+    setTimeout(init, 100);
+  });
+
+  // ── Gifts ────────────────────────────────────
+  function renderGifts() {
+    const gifts = getGifts();
+    const grid  = document.getElementById('giftGrid');
+    if (!gifts.length) {
+      grid.innerHTML = '<p style="color:#bbb;text-align:center;grid-column:1/-1">Em breve os presentes! 🎀</p>';
+      return;
+    }
+    grid.innerHTML = gifts.map(g => {
+      const imgHTML = g.image
+        ? `<img src="${g.image}" alt="${g.name}" class="gift-img">`
+        : `<div class="gift-icon">${g.icon || '🎁'}</div>`;
+      return `
+        <div class="gift-card${g.chosen ? ' chosen' : ''}" id="gc-${g.id}">
+          ${imgHTML}
+          <div class="gift-name">${g.name}</div>
+          <div class="gift-desc">${g.desc}</div>
+          <div class="gift-price">${brl(g.price)}</div>
+          ${g.chosen
+            ? `<div class="chosen-by">💚 por ${g.chosenBy}</div>`
+            : `<button class="btn-primary" style="width:100%;padding:10px;" onclick="openGift(${g.id})">🎁 Escolher presente</button>`
+          }
+        </div>`;
+    }).join('');
+  }
+
+  function openGift(id) {
+    currentGift = getGift(id);
+    if (!currentGift || currentGift.chosen) return;
+    document.getElementById('s1Name').textContent  = currentGift.name;
+    document.getElementById('s1Price').textContent = brl(currentGift.price);
+    document.getElementById('senderName').value    = '';
+    showStep('step1');
+    document.getElementById('pixModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.getElementById('pixModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function showStep(id) {
+    ['step1','step2','step3'].forEach(s =>
+      document.getElementById(s).style.display = s === id ? 'block' : 'none'
+    );
+  }
+
+  function goToStep2() {
+    const name = document.getElementById('senderName').value.trim();
+    if (!name) { showToast('Digite seu nome! 💜'); return; }
+    const cfg = getConfig();
+    document.getElementById('s2Name').textContent    = currentGift.name;
+    document.getElementById('s2Price').textContent   = brl(currentGift.price);
+    document.getElementById('s2KeyType').textContent = 'Chave PIX (' + (cfg.pixKeyType || '') + ')';
+    document.getElementById('s2Key').textContent     = cfg.pixKey   || '(configure no painel admin)';
+    document.getElementById('s2Owner').textContent   = cfg.pixOwner ? '👤 ' + cfg.pixOwner : '';
+    showStep('step2');
+  }
+
+  function copyPix() {
+    const key = getConfig().pixKey || '';
+    navigator.clipboard.writeText(key)
+      .then(() => showToast('Chave PIX copiada! 💜'))
+      .catch(() => {
+        const el = document.createElement('textarea');
+        el.value = key;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+        showToast('Chave PIX copiada! 💜');
+      });
+  }
+
+  async function confirmGift() {
+    const name = document.getElementById('senderName').value.trim();
+    await markGiftChosen(currentGift.id, name);
+    document.getElementById('s3Sender').textContent = name;
+    document.getElementById('s3Gift').textContent   = currentGift.name;
+    showStep('step3');
+    renderGifts();
+  }
+
+  document.getElementById('pixModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+
+  // ── RSVP ─────────────────────────────────────
+  async function submitRSVP() {
+    const name        = document.getElementById('guestName').value.trim();
+    const phone       = document.getElementById('guestPhone').value.trim();
+    const count       = parseInt(document.getElementById('guestCount').value) || 1;
+    const restriction = document.getElementById('guestRestriction').value.trim();
+    if (!name)  { showToast('Informe seu nome! 💜'); return; }
+    if (!phone) { showToast('Informe seu telefone! 💜'); return; }
+    await addGuest({ name, phone, count, restriction });
+    document.getElementById('rsvpForm').style.display    = 'none';
+    document.getElementById('rsvpSuccess').style.display = 'block';
+    renderGuests();
+  }
+
+  function renderGuests() {
+    const guests = getGuests();
+    const grid   = document.getElementById('confirmedGrid');
+    if (!guests.length) {
+      grid.innerHTML = '<p style="color:#bbb;font-size:.9rem;">Ninguém confirmou ainda. Seja o primeiro! 🎈</p>';
+      return;
+    }
+    grid.innerHTML = guests.map(g =>
+      `<div class="confirmed-chip">💜 ${g.name}
+        <span class="confirmed-count">(${g.count} ${g.count > 1 ? 'pessoas' : 'pessoa'})</span>
+      </div>`
+    ).join('');
+  }
+</script>
+</body>
+</html>
