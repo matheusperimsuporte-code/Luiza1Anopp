@@ -181,7 +181,7 @@ async function deleteGuest(id) {
 }
 
 // ── Config ────────────────────────────────────────────────────────
-async function saveConfig(config) {
+async function dbSaveConfig(config) {
   await _ready;
   _cache.config = config;
   await _saveConfig();
@@ -219,7 +219,7 @@ function brl(n) {
 Object.assign(window, {
   getGifts, getGift, saveGift, deleteGift, markGiftChosen,
   getGuests, addGuest, deleteGuest,
-  getConfig, saveConfig,
+  getConfig, dbSaveConfig,
   checkLogin, isAdminLoggedIn, setAdminLoggedIn,
   showToast, brl,
   // expõe _ready e _listenRealtime para os HTMLs usarem

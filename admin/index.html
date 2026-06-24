@@ -542,7 +542,7 @@
       adminUser:    document.getElementById('cfgUser').value.trim() || 'admin',
       adminPass:    newPass || current.adminPass,
     };
-    await window.saveConfig(cfg); // calls data.js
+    await window.dbSaveConfig(cfg); // calls data.js
     showToast('Configurações salvas! ✅');
   }
 
