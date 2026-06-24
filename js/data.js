@@ -36,9 +36,10 @@ const DEFAULT_CONFIG = {
   partyDate:    '20 de Julho de 2025',
   partyTime:    '14h00',
   partyPlace:   'A definir',
-  pixKey:       '',
-  pixOwner:     '',
-  pixKeyType:   'celular',
+  pixKey:       'cc361e00-0bfe-490d-a2eb-580aaa651872',
+  pixOwner:     'Matheus Valenciano Nunes',
+  pixKeyType:   'chave aleatória',
+  pixCity:      'Rinopolis',
   heroTitle:    'Luísa',
   heroSubtitle: 'Venha celebrar com a gente o primeiro ano de vida da nossa pequena princesa! 🌸',
   adminUser:    'admin',
@@ -215,13 +216,64 @@ function brl(n) {
   return 'R$ ' + Number(n).toFixed(2).replace('.', ',');
 }
 
+// ── Gerador de código PIX (padrão EMV / Copia e Cola) ────────────
+function gerarPixCopiaCola(valor) {
+  const cfg    = getConfig();
+  const chave  = cfg.pixKey   || '';
+  const nome   = (cfg.pixOwner  || 'LUISA FESTA').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase().substring(0, 25);
+  const cidade = (cfg.pixCity   || 'RINOPOLIS').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase().substring(0, 15);
+  const valor_ = Number(valor).toFixed(2);
+
+  function campo(id, val) {
+    const len = val.length.toString().padStart(2, '0');
+    return id + len + val;
+  }
+
+  // Merchant Account Info (GUI + chave)
+  const gui = campo('00', 'BR.GOV.BCB.PIX') + campo('01', chave);
+  const mai = campo('26', gui);
+
+  // Valor
+  const txVal = campo('54', valor_);
+
+  // Additional Data (txid fixo)
+  const addData = campo('62', campo('05', 'luisafesta'));
+
+  // Payload sem CRC
+  const payload =
+    campo('00', '01') +          // Payload Format Indicator
+    mai +                        // Merchant Account Info
+    campo('52', '0000') +        // MCC
+    campo('53', '986') +         // Moeda BRL
+    txVal +                      // Valor
+    campo('58', 'BR') +          // País
+    campo('59', nome) +          // Nome
+    campo('60', cidade) +        // Cidade
+    addData +                    // Dados adicionais
+    '6304';                      // CRC placeholder
+
+  // CRC-16 CCITT
+  function crc16(str) {
+    let crc = 0xFFFF;
+    for (let i = 0; i < str.length; i++) {
+      crc ^= str.charCodeAt(i) << 8;
+      for (let j = 0; j < 8; j++) {
+        crc = (crc & 0x8000) ? (crc << 1) ^ 0x1021 : crc << 1;
+      }
+    }
+    return (crc & 0xFFFF).toString(16).toUpperCase().padStart(4, '0');
+  }
+
+  return payload + crc16(payload);
+}
+
 // ── Exporta para window (acesso global nos scripts inline dos HTMLs) ─
 Object.assign(window, {
   getGifts, getGift, saveGift, deleteGift, markGiftChosen,
   getGuests, addGuest, deleteGuest,
   getConfig, dbSaveConfig,
   checkLogin, isAdminLoggedIn, setAdminLoggedIn,
-  showToast, brl,
+  showToast, brl, gerarPixCopiaCola,
   // expõe _ready e _listenRealtime para os HTMLs usarem
   dbReady: _ready,
   dbListenRealtime: _listenRealtime,

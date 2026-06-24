@@ -331,12 +331,13 @@ display:inline-block;margin-top:20px;padding:12px 24px;background:#9c6bb5;color:
       <p class="modal-gift-name" id="s2Name"></p>
       <div class="modal-price" id="s2Price"></div>
       <div class="pix-box">
-        <div class="pix-label" id="s2KeyType">Chave PIX</div>
-        <div class="pix-key"   id="s2Key">—</div>
-        <button class="btn-copy" onclick="copyPix()">📋 Copiar chave</button>
-        <div class="pix-owner" id="s2Owner"></div>
+        <div class="pix-label">📋 Código PIX — Copia e Cola</div>
+        <div class="pix-key" id="s2PixCode" style="font-size:.78rem;word-break:break-all;letter-spacing:.5px;"></div>
+        <button class="btn-copy" onclick="copyPix()">📋 Copiar código PIX</button>
+        <div class="pix-owner" id="s2Owner" style="margin-top:10px;"></div>
+        <div style="font-size:.78rem;color:#aaa;margin-top:6px;">Cole esse código no seu banco → Pix → Copia e Cola</div>
       </div>
-      <p class="modal-note">Após enviar o PIX, clique em confirmar abaixo. O presente ficará marcado como escolhido! 🎀</p>
+      <p class="modal-note">O valor já vem preenchido automaticamente! Após enviar clique em confirmar abaixo. 🎀</p>
       <button class="btn-primary" style="width:100%;" onclick="confirmGift()">✅ Confirmar que enviei o PIX</button>
     </div>
 
@@ -446,27 +447,27 @@ display:inline-block;margin-top:20px;padding:12px 24px;background:#9c6bb5;color:
   function goToStep2() {
     const name = document.getElementById('senderName').value.trim();
     if (!name) { showToast('Digite seu nome! 💜'); return; }
-    const cfg = getConfig();
+    const cfg     = getConfig();
+    const pixCode = gerarPixCopiaCola(currentGift.price);
     document.getElementById('s2Name').textContent    = currentGift.name;
     document.getElementById('s2Price').textContent   = brl(currentGift.price);
-    document.getElementById('s2KeyType').textContent = 'Chave PIX (' + (cfg.pixKeyType || '') + ')';
-    document.getElementById('s2Key').textContent     = cfg.pixKey   || '(configure no painel admin)';
+    document.getElementById('s2PixCode').textContent = pixCode;
     document.getElementById('s2Owner').textContent   = cfg.pixOwner ? '👤 ' + cfg.pixOwner : '';
     showStep('step2');
   }
 
   function copyPix() {
-    const key = getConfig().pixKey || '';
-    navigator.clipboard.writeText(key)
-      .then(() => showToast('Chave PIX copiada! 💜'))
+    const code = document.getElementById('s2PixCode').textContent;
+    navigator.clipboard.writeText(code)
+      .then(() => showToast('Código PIX copiado! Cole no seu banco 💜'))
       .catch(() => {
         const el = document.createElement('textarea');
-        el.value = key;
+        el.value = code;
         document.body.appendChild(el);
         el.select();
         document.execCommand('copy');
         document.body.removeChild(el);
-        showToast('Chave PIX copiada! 💜');
+        showToast('Código PIX copiado! Cole no seu banco 💜');
       });
   }
 

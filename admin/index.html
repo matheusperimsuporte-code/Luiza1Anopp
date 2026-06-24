@@ -165,6 +165,10 @@
             <label>Local</label>
             <input class="field" id="cfgPlace" placeholder="Endereço ou 'A definir'">
           </div>
+          <div class="form-group">
+            <label>Cidade (para o PIX)</label>
+            <input class="field" id="cfgPixCity" placeholder="Ex: Rinopolis">
+          </div>
         </div>
 
         <!-- PIX -->
@@ -519,6 +523,7 @@
     document.getElementById('cfgDate').value       = c.partyDate   || '';
     document.getElementById('cfgTime').value       = c.partyTime   || '';
     document.getElementById('cfgPlace').value      = c.partyPlace  || '';
+    document.getElementById('cfgPixCity').value    = c.pixCity     || '';
     document.getElementById('cfgPixType').value    = c.pixKeyType  || 'celular';
     document.getElementById('cfgPixKey').value     = c.pixKey      || '';
     document.getElementById('cfgPixOwner').value   = c.pixOwner    || '';
@@ -536,6 +541,7 @@
       partyDate:    document.getElementById('cfgDate').value.trim(),
       partyTime:    document.getElementById('cfgTime').value.trim(),
       partyPlace:   document.getElementById('cfgPlace').value.trim(),
+      pixCity:      document.getElementById('cfgPixCity').value.trim(),
       pixKeyType:   document.getElementById('cfgPixType').value,
       pixKey:       document.getElementById('cfgPixKey').value.trim(),
       pixOwner:     document.getElementById('cfgPixOwner').value.trim(),
